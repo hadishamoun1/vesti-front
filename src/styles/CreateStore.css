@@ -12,8 +12,9 @@
   margin: auto;
   box-sizing: border-box;
   margin-top: 100px;
-  position: relative; 
+  position: relative;
 }
+
 /* Form Container */
 .form-container {
   margin-top: 40px;
@@ -32,19 +33,49 @@
   gap: 10px;
 }
 
+/* Enhanced Input and Textarea Styles */
 input[type="text"],
 textarea {
   width: calc(100% - 20px);
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
 }
 
+/* Focused State */
+input[type="text"]:focus,
+textarea:focus {
+  border-color: #167ce2;
+  background-color: #fff;
+  outline: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Textarea Styling */
 textarea {
   resize: vertical;
-  min-height: 80px;
+  min-height: 100px;
 }
 
+/* Placeholder Styling */
+input[type="text"]::placeholder,
+textarea::placeholder {
+  color: #999;
+  opacity: 0.8;
+  transition: opacity 0.2s ease-in-out;
+}
+
+/* Placeholder Focus */
+input[type="text"]:focus::placeholder,
+textarea:focus::placeholder {
+  opacity: 0.5;
+}
+
+/* Label Styles */
 label {
   font-weight: bold;
 }
@@ -129,6 +160,7 @@ label {
   border-radius: 5px;
   cursor: pointer;
 }
+
 /* Done Button under Upload Container */
 .done-button-main {
   padding: 10px 20px;
@@ -137,8 +169,8 @@ label {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  width: 150px; 
-  position: absolute; 
-  bottom: 20px; 
-  right: 20px; 
+  width: 150px;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
 }
