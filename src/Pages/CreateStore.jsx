@@ -1,11 +1,14 @@
+// src/Pages/CreateStorePage.js
 import React from "react";
 import "../styles/CreateStore.css";
 
 const CreateStorePage = () => {
   return (
     <div className="store-container">
-      <h1>Store Page</h1>
-      {/* Add content for the store page here */}
+      <div className="text-center">
+        <h1>Create new store</h1>
+      </div>
+      {/* Add other content here that does not need to be centered */}
     </div>
   );
 };
