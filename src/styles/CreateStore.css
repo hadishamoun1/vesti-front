@@ -1,98 +1,110 @@
 /* Store Page Container */
 .store-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 20px;
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  width: 60vw;
-  height: 75vh;
-  margin: auto;
-  padding: 20px;
   background-color: #ffffff;
+  width: 45vw;
+  height: 60vh;
+  margin: auto;
   box-sizing: border-box;
-  margin-top: 50px;
+  margin-top: 100px;
 }
 
-/* Title */
-.title {
-  text-align: center;
-  margin-bottom: 30px;
-  font-size: 24px;
+/* Square Image Upload Container */
+.upload-container {
+  width: 50%;
+  height: 57%;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-top: 40px;
+  margin-right: 10px;
+}
+
+/* Upload Text */
+.upload-text {
   color: #333;
+  font-size: 16px;
+  text-align: center;
+  cursor: pointer;
+  padding: 10px;
+  position: absolute;
+  z-index: 1;
+}
+
+/* Hidden File Input */
+.upload-container input[type="file"] {
+  display: none;
+}
+
+/* Image Preview */
+.upload-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 15px;
 }
 
 /* Form Container */
 .form-container {
+  margin-top: 40px;
+  margin-left: 10px;
+  margin-right: 20px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* Align items to the left */
+  gap: 30px;
+  flex: 1;
 }
 
-/* Form Group */
+/* Form Group Styles */
 .form-group {
-  margin-bottom: 20px; /* Space between form elements */
-  width: 100%; /* Full width of the container */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-/* Label Styles */
-.form-group label {
-  display: block;
+label {
   font-weight: bold;
-  margin-bottom: 5px;
   font-size: 16px;
-  color: #555;
+  color: #333;
 }
 
 /* Input and Textarea Styles */
-.form-group input,
-.form-group textarea {
-  width: calc(100% - 20px); /* Width a little smaller than the container */
-  max-width: 500px; /* Optional: max-width for larger screens */
-  padding: 12px 15px;
+input[type="text"],
+textarea {
+  width: calc(100% - 20px);
+  padding: 12px;
+  border: 1px solid #ddd;
   border-radius: 8px;
-  border: 1px solid #ccc;
+  background-color: #f9f9f9;
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-  font-size: 16px;
-  color: #333;
-  box-sizing: border-box;
-  transition: border-color 0.3s, box-shadow 0.3s;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Focus Styles */
-.form-group input:focus,
-.form-group textarea:focus {
-  border-color: #167ce2; /* Change border color on focus */
-  box-shadow: 0 0 5px rgba(22, 124, 226, 0.4); /* Add shadow on focus */
+input[type="text"]:focus,
+textarea:focus {
+  border-color: #167ce2;
+  box-shadow: 0 0 8px rgba(22, 124, 226, 0.3);
   outline: none;
 }
 
-/* Textarea Specific Styles */
-.form-group textarea {
-  height: 100px;
-  resize: vertical; /* Allow vertical resize only */
-  font-family: "Arial", sans-serif;
+textarea {
+  resize: vertical;
+  min-height: 80px;
 }
 
-/* Responsive Styles */
+/* Responsive Styles for Inputs */
 @media (max-width: 768px) {
-  .store-container {
-    width: 90vw;
-    height: 90vh;
-  }
-
-  .form-group input,
-  .form-group textarea {
-    width: calc(100% - 20px); /* Adjust width for smaller screens */
-  }
-}
-
-@media (max-width: 480px) {
-  .store-container {
-    width: 95vw;
-    height: auto;
-    padding: 10px;
-  }
-
-  .form-group input,
-  .form-group textarea {
-    width: calc(100% - 10px); /* Further adjust width for very small screens */
+  input[type="text"],
+  textarea {
+    width: calc(100% - 10px);
   }
 }

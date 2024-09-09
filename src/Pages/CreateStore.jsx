@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import "../styles/CreateStore.css";
 
 const CreateStorePage = () => {
+  const [image, setImage] = useState(null);
+
+  const handleImageChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setImage(URL.createObjectURL(file));
+    }
+  };
+
   return (
     <div className="store-container">
-      <h1 className="title">Create New Store</h1>
       <div className="form-container">
         <div className="form-group">
           <label htmlFor="store-name">Store</label>
@@ -21,6 +29,16 @@ const CreateStorePage = () => {
           <label htmlFor="store-location">Location</label>
           <input id="store-location" type="text" placeholder="Store Location" />
         </div>
+      </div>
+      <div className="upload-container">
+        {image ? (
+          <img src={image} alt="Uploaded" className="upload-image" />
+        ) : (
+          <label className="upload-text">
+            Upload an Image
+            <input type="file" accept="image/*" onChange={handleImageChange} />
+          </label>
+        )}
       </div>
     </div>
   );
