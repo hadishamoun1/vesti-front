@@ -6,7 +6,6 @@
   height: 60px;
   position: relative;
   z-index: 1000;
-  
 }
 
 /* Navbar content container */
@@ -29,6 +28,9 @@
   gap: 20px;
   margin: 0;
   padding: 0;
+  align-items: center; /* Vertically center items */
+  flex: 1; /* Take up remaining space */
+  justify-content: center; /* Center items horizontally */
 }
 
 /* Menu item styles */
@@ -77,14 +79,14 @@
     top: 60px;
     left: 0;
     padding: 10px 0;
+    align-items: center; /* Center items horizontally in dropdown */
+    justify-content: center; /* Center items vertically in dropdown */
   }
 
-  /* Show the menu when active */
   .navbar-menu.active {
     display: flex;
   }
 
-  /* Show hamburger menu icon on small screens */
   .navbar-hamburger {
     display: block;
   }
