@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../styles/Signup.css";
 
 const SignupPage = () => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -10,6 +11,7 @@ const SignupPage = () => {
     e.preventDefault();
     // Add your signup logic here
     if (password === confirmPassword) {
+      console.log("Name:", name);
       console.log("Email:", email);
       console.log("Password:", password);
     } else {
@@ -23,6 +25,18 @@ const SignupPage = () => {
         <form className="signup-form" onSubmit={handleSubmit}>
           <h2 className="signup-title">Create your account</h2>
           <p className="signup-subtitle">Fill in the details to sign up.</p>
+
+          <div className="input-group">
+            <label htmlFor="name">Name</label>
+            <input
+              type="text"
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Enter your name"
+              required
+            />
+          </div>
 
           <div className="input-group">
             <label htmlFor="email">Email</label>
