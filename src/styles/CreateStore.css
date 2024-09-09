@@ -1,0 +1,27 @@
+/* Store Page Container */
+.store-container {
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 75vw;
+  height: 75vh;
+  margin: auto;
+  padding: 20px;
+  background-color: #ffffff;
+  box-sizing: border-box;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .store-container {
+    width: 90vw;
+    height: 90vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .store-container {
+    width: 95vw;
+    height: auto;
+    padding: 10px;
+  }
+}

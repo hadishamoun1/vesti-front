@@ -1,7 +1,7 @@
 import React from 'react';
 import './StorePage.css'; // Import the CSS file
 
-const StorePage = () => {
+const CreateStorePage = () => {
   return (
     <div className="store-container">
       <h1>Store Page</h1>
@@ -10,4 +10,4 @@ const StorePage = () => {
   );
 };
 
-export default StorePage;
+export default CreateStorePage;
