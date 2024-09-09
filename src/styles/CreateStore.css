@@ -2,12 +2,13 @@
 .store-container {
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  width: 75vw;
+  width: 60vw;
   height: 75vh;
   margin: auto;
   padding: 20px;
   background-color: #ffffff;
   box-sizing: border-box;
+  margin-top: 50px;
 }
 
 /* Responsive Styles */
