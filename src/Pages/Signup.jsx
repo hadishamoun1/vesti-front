@@ -6,16 +6,41 @@ const SignupPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [phone, setPhone] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add your signup logic here
     if (password === confirmPassword) {
-      console.log("Name:", name);
-      console.log("Email:", email);
-      console.log("Password:", password);
+      try {
+        const response = await fetch("http://localhost:3000/signup", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name,
+            email,
+            password,
+            phoneNumber: phone,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          setSuccess("Sign up successful! Redirecting...");
+          // Optionally, handle redirection or other success actions
+          // For example: window.location.href = '/login';
+        } else {
+          setError(data.error || "An error occurred during sign up.");
+        }
+      } catch (err) {
+        setError("Network error. Please try again.");
+      }
     } else {
-      console.error("Passwords do not match");
+      setError("Passwords do not match.");
     }
   };
 
@@ -25,6 +50,9 @@ const SignupPage = () => {
         <form className="signup-form" onSubmit={handleSubmit}>
           <h2 className="signup-title">Create your account</h2>
           <p className="signup-subtitle">Fill in the details to sign up.</p>
+
+          {error && <p className="error-message">{error}</p>}
+          {success && <p className="success-message">{success}</p>}
 
           <div className="input-group">
             <label htmlFor="name">Name</label>
@@ -46,6 +74,18 @@ const SignupPage = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
+              required
+            />
+          </div>
+
+          <div className="input-group">
+            <label htmlFor="phone">Phone Number</label>
+            <input
+              type="tel"
+              id="phone"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              placeholder="Enter your phone number"
               required
             />
           </div>
