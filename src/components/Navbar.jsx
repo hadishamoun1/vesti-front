@@ -1,9 +1,15 @@
-import React from 'react';
-import { Link } from 'react-router-dom'; // Ensure you have react-router-dom installed
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom'; 
 
-import '../styles/NavBar.css'; // Import your CSS file for styling
+import '../styles/NavBar.css'; 
 
 const NavBar = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
   return (
     <nav className="navbar">
       <div className="navbar-container">
@@ -15,7 +21,7 @@ const NavBar = () => {
         </div>
 
         {/* Navigation Links */}
-        <ul className="navbar-menu">
+        <ul className={`navbar-menu ${menuOpen ? 'active' : ''}`}>
           <li className="navbar-item">
             <Link to="/discounts" className="navbar-link">Discounts</Link>
           </li>
@@ -26,6 +32,13 @@ const NavBar = () => {
             <Link to="/products" className="navbar-link">Products</Link>
           </li>
         </ul>
+        
+        {/* Hamburger Menu Icon */}
+        <div className="navbar-hamburger">
+          <button className="hamburger-icon" onClick={toggleMenu}>
+            &#9776;
+          </button>
+        </div>
       </div>
     </nav>
   );
