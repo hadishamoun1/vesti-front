@@ -20,11 +20,11 @@ const LoginPage = () => {
       const data = await response.json();
 
       if (response.ok) {
-        // Save the JWT token in session storage
+      
         sessionStorage.setItem("jwtToken", data.token);
 
-        // Redirect or handle successful login (e.g., navigate to another page)
-        window.location.href = "/dashboard"; // Replace with your desired redirect URL
+       
+       // window.location.href = "/dashboard"; 
       } else {
         // Handle errors (e.g., display error message)
         setError(data.message);
