@@ -15,7 +15,9 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #6b73ff 0%, #000dff 100%);
+  background-image: url("../Images/LoginImage.jpg");
+  background-size: cover;
+  background-position: center;
 }
 
 .login-container {
@@ -67,7 +69,7 @@ body {
 
 .input-group input:focus {
   outline: none;
-  border-color: #6b73ff;
+  border-color: #177fe0;
 }
 
 /* Center the submit button */
@@ -80,7 +82,7 @@ body {
   padding: 12px 24px; /* Adjust padding to make button size responsive */
   font-size: 18px;
   color: white;
-  background-color: #6b73ff;
+  background-color: rgb(21, 110, 243);
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -88,7 +90,7 @@ body {
 }
 
 .submit-btn:hover {
-  background-color: #5864f8;
+  background-color: #2084f7;
 }
 
 .submit-btn:disabled {
