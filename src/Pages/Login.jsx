@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import "../styles/Login.css";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(""); 
+  const [error, setError] = useState("");
+  const navigate = useNavigate(); // Initialize useNavigate
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -20,14 +23,10 @@ const LoginPage = () => {
       const data = await response.json();
 
       if (response.ok) {
-      
         sessionStorage.setItem("jwtToken", data.token);
-
-       
-       // window.location.href = "/dashboard"; 
+        navigate("/"); // Redirect to the homepage (or any other page)
       } else {
-        // Handle errors (e.g., display error message)
-        setError(data.message);
+        setError(data.message); // Display error message
       }
     } catch (err) {
       console.error("Error during login:", err);
@@ -41,9 +40,8 @@ const LoginPage = () => {
         <form className="login-form" onSubmit={handleSubmit}>
           <h2 className="login-title">Welcome back!</h2>
           <p className="login-subtitle">Please login to your account.</p>
-
-          {error && <p className="error-message">{error}</p>} {/* Display error message */}
-
+          {error && <p className="error-message">{error}</p>}{" "}
+          {/* Display error message */}
           <div className="input-group">
             <label htmlFor="email">Email</label>
             <input
@@ -55,7 +53,6 @@ const LoginPage = () => {
               required
             />
           </div>
-
           <div className="input-group">
             <label htmlFor="password">Password</label>
             <input
@@ -67,7 +64,6 @@ const LoginPage = () => {
               required
             />
           </div>
-
           <div className="input-group">
             <div className="submit-btn-container">
               <button className="submit-btn" type="submit">
@@ -75,7 +71,6 @@ const LoginPage = () => {
               </button>
             </div>
           </div>
-
           <div className="signup-link">
             <p>
               Don't have an account? <a href="/signup">Sign up</a>
