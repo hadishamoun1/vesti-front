@@ -2,8 +2,10 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import LoginPage from "./Pages/Login";
 import SignupPage from "./Pages/Signup";
-import HomePage from "./Pages/Home"; 
-import Layout from "./Layout"; 
+import HomePage from "./Pages/Home";
+import Layout from "./Layout";
+import CreateStorePage from "./Pages/CreateStore";
+
 function App() {
   return (
     <Router>
@@ -15,11 +17,18 @@ function App() {
             path="/"
             element={
               <Layout>
-                <HomePage /> 
+                <HomePage />
               </Layout>
             }
           />
-          
+          <Route
+            path="/create-store"
+            element={
+              <Layout>
+                <CreateStorePage />
+              </Layout>
+            }
+          />
         </Routes>
       </div>
     </Router>
