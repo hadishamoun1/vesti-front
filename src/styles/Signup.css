@@ -1,0 +1,143 @@
+/* Styling for SignupPage */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: "Poppins", sans-serif;
+  }
+  
+  .signup-page {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("../Images/SignupImage.jpg"); /* Use an appropriate background image */
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .signup-container {
+    width: 100%;
+    max-width: 400px;
+    background-color: rgba(255, 255, 255, 0.8); /* White color with 80% opacity */
+    border-radius: 15px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    position: relative;
+  }
+  
+  .signup-container::before {
+    content: "";
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border-radius: 15px;
+    border: 4px solid transparent;
+    background: linear-gradient(45deg, blue, transparent);
+    background-size: 300% 300%;
+    animation: borderAnimation 4s infinite;
+    z-index: -1; /* Puts the animation behind the content */
+  }
+  
+  @keyframes borderAnimation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  .signup-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .signup-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #333;
+    text-align: center;
+  }
+  
+  .signup-subtitle {
+    font-size: 13px;
+    color: #919191;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .input-group {
+    margin-bottom: 20px;
+  }
+  
+  .input-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+  
+  .input-group input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    transition: border-color 0.3s;
+  }
+  
+  .input-group input:focus {
+    outline: none;
+    border-color: #177fe0;
+  }
+  
+  /* Center the submit button */
+  .submit-btn-container {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+  }
+  
+  .submit-btn {
+    padding: 12px 24px; /* Adjust padding to make button size responsive */
+    font-size: 18px;
+    color: white;
+    background-color: rgb(21, 110, 243);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-btn:hover {
+    background-color: #2084f7;
+  }
+  
+  .submit-btn:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+  }
+  
+  .login-link {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .login-link a {
+    color: #6b73ff;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  
+  .login-link a:hover {
+    text-decoration: underline;
+  }
+  
