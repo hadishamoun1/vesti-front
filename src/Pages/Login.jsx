@@ -4,13 +4,12 @@ import "../styles/Login.css";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(""); // To display error messages
-
+  const [error, setError] = useState(""); 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:3000/login", {
+      const response = await fetch("http://localhost:3000/login/store", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
