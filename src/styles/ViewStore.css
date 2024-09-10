@@ -1,0 +1,55 @@
+/* src/styles/ViewStore.css */
+
+/* Container for the view store page */
+.view-store-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Heading for the store section */
+.store-heading {
+  font-size: 24px;
+  margin-bottom: 20px;
+  align-self: flex-start;
+}
+
+/* Container for the store image */
+.store-image-container {
+  width: 70%;
+  max-width: 100%;
+  height: 400px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  margin-left: 190px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: #f9f9f9;
+}
+
+/* Style for the store image */
+.store-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Heading for the products section */
+.products-heading {
+  font-size: 20px;
+  margin-bottom: 20px;
+  align-self: flex-start;
+}
+
+/* Container for product cards */
+.products-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start;
+  width: 100%;
+}
