@@ -24,9 +24,9 @@ const LoginPage = () => {
 
       if (response.ok) {
         sessionStorage.setItem("jwtToken", data.token);
-        navigate("/"); // Redirect to the homepage (or any other page)
+        navigate("/home");
       } else {
-        setError(data.message); // Display error message
+        setError(data.message);
       }
     } catch (err) {
       console.error("Error during login:", err);

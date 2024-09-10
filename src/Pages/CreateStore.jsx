@@ -10,6 +10,7 @@ import {
 } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import { jwtDecode } from "jwt-decode";
 
 // Define a custom icon for the marker
 const redPinIcon = new L.Icon({
@@ -44,9 +45,68 @@ const CreateStorePage = () => {
   const [mapOpen, setMapOpen] = useState(false);
   const [location, setLocation] = useState({ lat: null, lng: null });
   const [position, setPosition] = useState([37.7749, -122.4194]); // Default position
+  const [storeName, setStoreName] = useState("");
+  const [storeDescription, setStoreDescription] = useState("");
+
+  // Get the JWT token from session storage and decode it
+  const token = sessionStorage.getItem("jwtToken");
+  let storeId = null;
+  if (token) {
+    const decodedToken = jwtDecode(token);
+    storeId = decodedToken.storeId; // Extract the storeId from the token
+  }
 
   const handleDoneClick = () => {
     setMapOpen(false);
+  };
+
+  const handleSubmit = async () => {
+    if (!storeId) {
+      console.error("Store ID is not available.");
+      return;
+    }
+
+    if (!storeName || !storeDescription || !location.lat || !location.lng) {
+      console.error("Please fill out all fields and set a location.");
+      return;
+    }
+
+    // Construct the data to send to the API
+    const formData = new FormData();
+    formData.append("name", storeName);
+    formData.append("description", storeDescription);
+    formData.append(
+      "location",
+      JSON.stringify({
+        type: "Point",
+        coordinates: [location.lng, location.lat], // Ensure the correct order
+      })
+    );
+    if (image) {
+      formData.append("picture", image); // Ensure 'picture' matches the backend key
+    }
+
+    try {
+      const response = await fetch(
+        `http://localhost:3000/stores/update/${storeId}`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        }
+      );
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log("Store updated successfully:", result);
+      } else {
+        console.error("Error updating store:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error updating store:", error);
+    }
   };
 
   return (
@@ -54,13 +114,21 @@ const CreateStorePage = () => {
       <div className="form-container">
         <div className="form-group">
           <label htmlFor="store-name">Store</label>
-          <input id="store-name" type="text" placeholder="Store Name" />
+          <input
+            id="store-name"
+            type="text"
+            placeholder="Store Name"
+            value={storeName}
+            onChange={(e) => setStoreName(e.target.value)}
+          />
         </div>
         <div className="form-group">
           <label htmlFor="store-description">Description</label>
           <textarea
             id="store-description"
             placeholder="Store Description"
+            value={storeDescription}
+            onChange={(e) => setStoreDescription(e.target.value)}
           ></textarea>
         </div>
         <div className="form-group">
@@ -86,7 +154,11 @@ const CreateStorePage = () => {
 
       <div className="upload-container">
         {image ? (
-          <img src={image} alt="Uploaded" className="upload-image" />
+          <img
+            src={URL.createObjectURL(image)}
+            alt="Uploaded"
+            className="upload-image"
+          />
         ) : (
           <label className="upload-text">
             Upload an Image
@@ -95,8 +167,7 @@ const CreateStorePage = () => {
               accept="image/*"
               onChange={(e) => {
                 if (e.target.files && e.target.files[0]) {
-                  const file = e.target.files[0];
-                  setImage(URL.createObjectURL(file));
+                  setImage(e.target.files[0]);
                 }
               }}
             />
@@ -104,12 +175,14 @@ const CreateStorePage = () => {
         )}
       </div>
 
-      {/* Done Button at the bottom-right corner under the upload container */}
       <button onClick={handleDoneClick} className="done-button-main">
         Done
       </button>
 
-      {/* Map Popup */}
+      <button onClick={handleSubmit} className="submit-button">
+        Submit
+      </button>
+
       {mapOpen && (
         <div className="map-popup">
           <MapContainer
