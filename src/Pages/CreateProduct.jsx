@@ -1,22 +1,65 @@
 import React, { useState } from "react";
-import "../styles/CreateProduct.css"; // CSS file for styling
+import "../styles/CreateProduct.css";
+import { jwtDecode } from "jwt-decode";
 
 const CreateProductPage = () => {
   const [image, setImage] = useState(null);
   const [productName, setProductName] = useState("");
   const [productDescription, setProductDescription] = useState("");
   const [productPrice, setProductPrice] = useState("");
-  const [productCategory, setProductCategory] = useState(""); // New state for category
+  const [productCategory, setProductCategory] = useState("");
+  const [availableColors, setAvailableColors] = useState([]);
+  const [selectedColor, setSelectedColor] = useState("");
+  const [availableSizes, setAvailableSizes] = useState([]);
+  const [selectedSize, setSelectedSize] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+
+  const colorOptions = [
+    { name: "Red", hex: "#FF0000" },
+    { name: "Green", hex: "#00FF00" },
+    { name: "Blue", hex: "#0000FF" },
+    { name: "Yellow", hex: "#FFFF00" },
+    { name: "Magenta", hex: "#FF00FF" },
+    { name: "Cyan", hex: "#00FFFF" },
+  ];
+
+  const sizeOptions = ["S", "M", "L", "XL", "XXL"];
+
+  const getToken = () => {
+    return sessionStorage.getItem("jwtToken");
+  };
+
+  const getStoreId = () => {
+    const token = getToken();
+    if (token) {
+      try {
+        const decodedToken = jwtDecode(token);
+        return parseInt(decodedToken.storeId, 10);
+      } catch (e) {
+        console.error("Error decoding token:", e);
+        return null;
+      }
+    }
+    return null;
+  };
 
   const handleDoneClick = async () => {
     if (
       !productName ||
       !productDescription ||
       !productPrice ||
-      !productCategory
+      !productCategory ||
+      !availableColors.length ||
+      !availableSizes.length
     ) {
       console.error("Please fill out all fields.");
+      return;
+    }
+
+    const token = getToken();
+    const storeId = getStoreId();
+    if (!token || !storeId) {
+      console.error("No token or storeId found.");
       return;
     }
 
@@ -25,7 +68,13 @@ const CreateProductPage = () => {
     formData.append("name", productName);
     formData.append("description", productDescription);
     formData.append("price", productPrice);
-    formData.append("category", productCategory); // Add category to the form data
+    formData.append("category", productCategory);
+    formData.append("storeId", storeId);
+
+    // Format availableColors and availableSizes for API request
+    formData.append("availableColors", availableColors.join(","));
+    formData.append("availableSizes", availableSizes.join(","));
+
     if (image) {
       formData.append("picture", image);
     }
@@ -33,6 +82,9 @@ const CreateProductPage = () => {
     try {
       const response = await fetch("http://localhost:3000/products/create", {
         method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
         body: formData,
       });
 
@@ -46,6 +98,94 @@ const CreateProductPage = () => {
     } catch (error) {
       console.error("Error creating product:", error);
     }
+  };
+
+  const handleColorChange = (event) => {
+    const colorHex = event.target.value;
+    const colorName =
+      colorOptions.find((color) => color.hex === colorHex)?.name || "";
+
+    setSelectedColor(colorName);
+    setAvailableColors((prevColors) => {
+      if (prevColors.includes(colorName)) {
+        return prevColors.filter((c) => c !== colorName);
+      } else {
+        return [...prevColors, colorName];
+      }
+    });
+  };
+
+  const handleSizeChange = (event) => {
+    const size = event.target.value;
+
+    setSelectedSize(size);
+    setAvailableSizes((prevSizes) => {
+      if (prevSizes.includes(size)) {
+        return prevSizes.filter((s) => s !== size);
+      } else {
+        return [...prevSizes, size];
+      }
+    });
+  };
+
+  const renderColorsDropdown = () => {
+    return (
+      <select onChange={handleColorChange} value={selectedColor}>
+        <option value="">Select a Color</option>
+        {colorOptions.map((color, index) => (
+          <option
+            key={index}
+            value={color.hex}
+            style={{ backgroundColor: color.hex }}
+          >
+            {color.name}
+          </option>
+        ))}
+      </select>
+    );
+  };
+
+  const renderSizesDropdown = () => {
+    return (
+      <select onChange={handleSizeChange} value={selectedSize}>
+        <option value="">Select a Size</option>
+        {sizeOptions.map((size, index) => (
+          <option key={index} value={size}>
+            {size}
+          </option>
+        ))}
+      </select>
+    );
+  };
+
+  const renderColorsCircles = () => {
+    return (
+      <div className="selected-colors">
+        {availableColors.map((color, index) => (
+          <div
+            key={index}
+            className="color-circle"
+            style={{
+              backgroundColor:
+                colorOptions.find((c) => c.name === color)?.hex || "#ffffff",
+            }}
+            title={color}
+          />
+        ))}
+      </div>
+    );
+  };
+
+  const renderSizesCircles = () => {
+    return (
+      <div className="size-swatches">
+        {availableSizes.map((size, index) => (
+          <div key={index} className="size-circle" title={size}>
+            {size}
+          </div>
+        ))}
+      </div>
+    );
   };
 
   return (
@@ -100,6 +240,16 @@ const CreateProductPage = () => {
             <option value="books">Books</option>
             {/* Add more categories as needed */}
           </select>
+        </div>
+        <div className="form-group">
+          <label htmlFor="available-colors">Available Colors</label>
+          {renderColorsDropdown()}
+          {renderColorsCircles()}
+        </div>
+        <div className="form-group">
+          <label htmlFor="available-sizes">Available Sizes</label>
+          {renderSizesDropdown()}
+          {renderSizesCircles()}
         </div>
       </div>
       <div className="upload-container">
