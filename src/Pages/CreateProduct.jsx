@@ -1,27 +1,44 @@
 import React, { useState } from "react";
-import "../styles/CreateProduct.css";
+import "../styles/CreateProduct.css"; // CSS file for styling
 
 const CreateProductPage = () => {
+  const [image, setImage] = useState(null);
   const [productName, setProductName] = useState("");
   const [productDescription, setProductDescription] = useState("");
-  const [price, setPrice] = useState("");
-  const [image, setImage] = useState(null);
+  const [productPrice, setProductPrice] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
-  const handleImageUpload = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      setImage(e.target.files[0]);
-    }
-  };
-
-  const handleCreateProduct = () => {
-    if (!productName || !productDescription || !price || !image) {
-      console.error("Please fill out all fields and upload an image.");
+  const handleDoneClick = async () => {
+    if (!productName || !productDescription || !productPrice) {
+      console.error("Please fill out all fields.");
       return;
     }
 
-    // Handle form submission logic (e.g., send data to API)
-    setSuccessMessage("Product created successfully!");
+    // Construct the data to send to the API
+    const formData = new FormData();
+    formData.append("name", productName);
+    formData.append("description", productDescription);
+    formData.append("price", productPrice);
+    if (image) {
+      formData.append("picture", image);
+    }
+
+    try {
+      const response = await fetch("http://localhost:3000/products/create", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log("Product created successfully:", result);
+        setSuccessMessage("Product created successfully!");
+      } else {
+        console.error("Error creating product:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error creating product:", error);
+    }
   };
 
   return (
@@ -37,7 +54,6 @@ const CreateProductPage = () => {
             onChange={(e) => setProductName(e.target.value)}
           />
         </div>
-
         <div className="form-group">
           <label htmlFor="product-description">Description</label>
           <textarea
@@ -47,19 +63,23 @@ const CreateProductPage = () => {
             onChange={(e) => setProductDescription(e.target.value)}
           ></textarea>
         </div>
-
         <div className="form-group">
           <label htmlFor="product-price">Price</label>
           <input
             id="product-price"
-            type="number"
+            type="text"
             placeholder="Product Price"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
+            value={productPrice}
+            onChange={(e) => {
+              const value = e.target.value;
+              // Allow only numbers and decimal points
+              if (/^\d*\.?\d*$/.test(value)) {
+                setProductPrice(value);
+              }
+            }}
           />
         </div>
       </div>
-
       <div className="upload-container">
         {image ? (
           <img
@@ -73,16 +93,18 @@ const CreateProductPage = () => {
             <input
               type="file"
               accept="image/*"
-              onChange={handleImageUpload}
+              onChange={(e) => {
+                if (e.target.files && e.target.files[0]) {
+                  setImage(e.target.files[0]);
+                }
+              }}
             />
           </label>
         )}
       </div>
-
-      <button onClick={handleCreateProduct} className="done-button-main">
-        Create Product
+      <button onClick={handleDoneClick} className="done-button-main">
+        Done
       </button>
-
       {successMessage && (
         <div className="success-popup">
           <p>{successMessage}</p>
