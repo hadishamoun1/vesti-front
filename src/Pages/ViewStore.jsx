@@ -46,6 +46,7 @@ const ViewStore = () => {
               alt={product.name}
               className="product-image"
             />
+            <hr className="product-divider" />
             <div className="product-info">
               <h3 className="product-name">{product.name}</h3>
               <p className="product-price">${product.price}</p>
