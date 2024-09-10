@@ -6,6 +6,7 @@ import HomePage from "./Pages/Home";
 import Layout from "./Layout";
 import CreateStorePage from "./Pages/CreateStore";
 import ViewStore from "./Pages/ViewStore";
+import CreateProduct from "./Pages/CreateProduct";
 
 function App() {
   return (
@@ -36,6 +37,14 @@ function App() {
             element={
               <Layout>
                 <ViewStore />
+              </Layout>
+            }
+          />
+          <Route
+            path="/products"
+            element={
+              <Layout>
+                <CreateProduct />
               </Layout>
             }
           />
