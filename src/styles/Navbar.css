@@ -14,7 +14,7 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-  position: relative; 
+  position: relative;
 }
 
 /* Navigation menu styles */
@@ -30,6 +30,7 @@
 /* Menu item styles */
 .navbar-item {
   margin: 0;
+  position: relative; /* Required for dropdown positioning */
 }
 
 /* Link styles */
@@ -39,6 +40,12 @@
   font-size: 16px;
   font-weight: 500;
   transition: color 0.3s ease;
+}
+
+/* Dropdown arrow styles */
+.dropdown-arrow {
+  margin-left: 8px;
+  font-size: 14px;
 }
 
 /* Link hover effect */
@@ -53,11 +60,46 @@
   margin-bottom: 5px;
 }
 
+/* Dropdown menu styles */
+.dropdown-toggle {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  top: 100%; /* Position directly below the parent */
+  left: 0;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  width: 120px;
+}
+
+.dropdown-menu.show {
+  display: block;
+}
+
+.dropdown-item {
+  display: block;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: #000;
+}
+
+.dropdown-item:hover {
+  background-color: #f1f1f1;
+}
+
 /* Hamburger menu styles */
 .navbar-hamburger {
   display: none;
   position: absolute;
-  top: 10px; 
+  top: 10px;
   right: 20px;
 }
 
