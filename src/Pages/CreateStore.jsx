@@ -44,17 +44,17 @@ const CreateStorePage = () => {
   const [image, setImage] = useState(null);
   const [mapOpen, setMapOpen] = useState(false);
   const [location, setLocation] = useState({ lat: null, lng: null });
-  const [position, setPosition] = useState([37.7749, -122.4194]); // Default position
+  const [position, setPosition] = useState([37.7749, -122.4194]); 
   const [storeName, setStoreName] = useState("");
   const [storeDescription, setStoreDescription] = useState("");
-  const [successMessage, setSuccessMessage] = useState(""); // New state for success message
+  const [successMessage, setSuccessMessage] = useState(""); 
 
   // Get the JWT token from session storage and decode it
   const token = sessionStorage.getItem("jwtToken");
   let storeId = null;
   if (token) {
     const decodedToken = jwtDecode(token);
-    storeId = decodedToken.storeId; // Extract the storeId from the token
+    storeId = decodedToken.storeId; 
   }
 
   const handleDoneClick = async () => {
@@ -76,11 +76,11 @@ const CreateStorePage = () => {
       "location",
       JSON.stringify({
         type: "Point",
-        coordinates: [location.lng, location.lat], // Ensure the correct order
+        coordinates: [location.lng, location.lat], 
       })
     );
     if (image) {
-      formData.append("picture", image); // Ensure 'picture' matches the backend key
+      formData.append("picture", image); 
     }
 
     try {
@@ -98,8 +98,8 @@ const CreateStorePage = () => {
       if (response.ok) {
         const result = await response.json();
         console.log("Store updated successfully:", result);
-        setSuccessMessage("Store updated successfully!"); // Set success message
-        setMapOpen(false); // Close the map popup
+        setSuccessMessage("Store updated successfully!"); 
+        setMapOpen(false); 
       } else {
         console.error("Error updating store:", response.statusText);
       }
