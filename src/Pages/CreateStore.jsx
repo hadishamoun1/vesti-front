@@ -47,6 +47,7 @@ const CreateStorePage = () => {
   const [position, setPosition] = useState([37.7749, -122.4194]); // Default position
   const [storeName, setStoreName] = useState("");
   const [storeDescription, setStoreDescription] = useState("");
+  const [successMessage, setSuccessMessage] = useState(""); // New state for success message
 
   // Get the JWT token from session storage and decode it
   const token = sessionStorage.getItem("jwtToken");
@@ -56,11 +57,7 @@ const CreateStorePage = () => {
     storeId = decodedToken.storeId; // Extract the storeId from the token
   }
 
-  const handleDoneClick = () => {
-    setMapOpen(false);
-  };
-
-  const handleSubmit = async () => {
+  const handleDoneClick = async () => {
     if (!storeId) {
       console.error("Store ID is not available.");
       return;
@@ -101,6 +98,8 @@ const CreateStorePage = () => {
       if (response.ok) {
         const result = await response.json();
         console.log("Store updated successfully:", result);
+        setSuccessMessage("Store updated successfully!"); // Set success message
+        setMapOpen(false); // Close the map popup
       } else {
         console.error("Error updating store:", response.statusText);
       }
@@ -179,10 +178,6 @@ const CreateStorePage = () => {
         Done
       </button>
 
-      <button onClick={handleSubmit} className="submit-button">
-        Submit
-      </button>
-
       {mapOpen && (
         <div className="map-popup">
           <MapContainer
@@ -203,6 +198,13 @@ const CreateStorePage = () => {
           <button onClick={handleDoneClick} className="done-button">
             Done
           </button>
+        </div>
+      )}
+
+      {successMessage && (
+        <div className="success-popup">
+          <p>{successMessage}</p>
+          <button onClick={() => setSuccessMessage("")}>Close</button>
         </div>
       )}
     </div>
