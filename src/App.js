@@ -30,6 +30,15 @@ function App() {
             }
           />
         </Routes>
+        <Route
+            path="/view-store"
+            element={
+              <Layout>
+                <CreateStorePage />
+              </Layout>
+            }
+          />
+        </Routes>
       </div>
     </Router>
   );

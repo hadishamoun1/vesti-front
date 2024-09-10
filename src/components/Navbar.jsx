@@ -35,7 +35,7 @@ const NavBar = () => {
             <div className="navbar-link" onClick={toggleDropdown}>
               Store <FaChevronDown className="dropdown-arrow" />
               <div className={`dropdown-menu ${dropdownOpen ? "show" : ""}`}>
-                <Link to="/edit-store" className="dropdown-item">
+                <Link to="/create-store" className="dropdown-item">
                   Edit Store
                 </Link>
                 <Link to="/view-store" className="dropdown-item">
