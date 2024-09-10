@@ -6,10 +6,16 @@ const CreateProductPage = () => {
   const [productName, setProductName] = useState("");
   const [productDescription, setProductDescription] = useState("");
   const [productPrice, setProductPrice] = useState("");
+  const [productCategory, setProductCategory] = useState(""); // New state for category
   const [successMessage, setSuccessMessage] = useState("");
 
   const handleDoneClick = async () => {
-    if (!productName || !productDescription || !productPrice) {
+    if (
+      !productName ||
+      !productDescription ||
+      !productPrice ||
+      !productCategory
+    ) {
       console.error("Please fill out all fields.");
       return;
     }
@@ -19,6 +25,7 @@ const CreateProductPage = () => {
     formData.append("name", productName);
     formData.append("description", productDescription);
     formData.append("price", productPrice);
+    formData.append("category", productCategory); // Add category to the form data
     if (image) {
       formData.append("picture", image);
     }
@@ -78,6 +85,21 @@ const CreateProductPage = () => {
               }
             }}
           />
+        </div>
+        <div className="form-group">
+          <label htmlFor="product-category">Category</label>
+          <select
+            id="product-category"
+            value={productCategory}
+            onChange={(e) => setProductCategory(e.target.value)}
+          >
+            <option value="">Select a Category</option>
+            <option value="electronics">Electronics</option>
+            <option value="clothing">Clothing</option>
+            <option value="home">Home</option>
+            <option value="books">Books</option>
+            {/* Add more categories as needed */}
+          </select>
         </div>
       </div>
       <div className="upload-container">
