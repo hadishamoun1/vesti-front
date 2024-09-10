@@ -5,6 +5,7 @@ import SignupPage from "./Pages/Signup";
 import HomePage from "./Pages/Home";
 import Layout from "./Layout";
 import CreateStorePage from "./Pages/CreateStore";
+import ViewStore from "./Pages/ViewStore";
 
 function App() {
   return (
@@ -29,12 +30,12 @@ function App() {
               </Layout>
             }
           />
-        </Routes>
-        <Route
+
+          <Route
             path="/view-store"
             element={
               <Layout>
-                <CreateStorePage />
+                <ViewStore />
               </Layout>
             }
           />
