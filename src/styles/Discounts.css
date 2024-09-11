@@ -4,7 +4,6 @@
   height: 91vh;
 }
 
-/* Left-side container styles */
 .left-container {
   box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
   margin-left: 20px;
@@ -13,11 +12,13 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: center;
+  align-items: stretch;
   border-radius: 20px;
   margin-top: 20px;
+  padding: 20px;
+  height: calc(91vh - 40px);
+  overflow-y: auto;
 }
-
 /* Mid container styles */
 .mid-container {
   margin-left: 50px;
@@ -56,6 +57,10 @@
   flex: 1;
   background-color: #ffffff;
   padding: 20px;
+  height: calc(
+    91vh - 40px
+  ); 
+  overflow-y: auto;
 }
 
 /* Text container with shadow effect */
@@ -165,6 +170,7 @@ p {
 .submit-button:hover {
   background-color: #0056b3;
 }
+
 /* Discounts.css */
 .discounts-container {
   display: flex;
@@ -183,6 +189,13 @@ p {
   flex-direction: column;
 }
 
+/* Ensure cards in the left container take full width */
+.left-container .discount-card {
+  width: 100%;
+  box-sizing: border-box; 
+}
+
+/* Discount card details */
 .discount-card {
   background-color: #ffffff;
   border-radius: 8px;
@@ -225,6 +238,7 @@ p {
 .disable-button:hover {
   background-color: #c9302c;
 }
+
 .active-container {
   width: 100%;
   display: flex;

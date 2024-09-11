@@ -220,12 +220,6 @@ const DiscountsPage = () => {
                     {new Date(discount.createdAt).toLocaleDateString()}
                   </p>
                 </div>
-                <button
-                  className="disable-button"
-                  onClick={() => handleDisableDiscount(discount.id)}
-                >
-                  Disable
-                </button>
               </div>
             ))
           ) : (
