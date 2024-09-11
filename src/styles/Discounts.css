@@ -55,7 +55,7 @@
   margin-top: 20px;
   flex: 1;
   background-color: #ffffff;
-  padding: 20px; 
+  padding: 20px;
 }
 
 /* Text container with shadow effect */
@@ -106,7 +106,7 @@ p {
   border-radius: 8px;
   border: 1px solid rgba(0, 0, 0, 0.2);
   font-size: 16px;
-  margin-bottom: 15px; 
+  margin-bottom: 15px;
 }
 
 .item-text {
@@ -122,7 +122,7 @@ p {
   border-radius: 8px;
   border: 1px solid rgba(0, 0, 0, 0.2);
   font-size: 16px;
-  margin-bottom: 15px; 
+  margin-bottom: 15px;
 }
 
 .discount-text {
@@ -138,7 +138,7 @@ p {
   border-radius: 8px;
   border: 1px solid rgba(0, 0, 0, 0.2);
   font-size: 16px;
-  margin-bottom: 15px; 
+  margin-bottom: 15px;
 }
 
 /* Button container styles */
@@ -146,12 +146,12 @@ p {
   display: flex;
   justify-content: center;
   margin-bottom: 50px;
-  padding: 20px; 
+  padding: 20px;
 }
 
 /* Button styling */
 .submit-button {
-  background-color: #007bff; 
+  background-color: #007bff;
   color: #ffffff;
   border: none;
   border-radius: 8px;
@@ -163,7 +163,7 @@ p {
 }
 
 .submit-button:hover {
-  background-color: #0056b3; 
+  background-color: #0056b3;
 }
 /* Discounts.css */
 .discounts-container {

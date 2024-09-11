@@ -55,7 +55,7 @@ const DiscountsPage = () => {
           );
           const productData = await productResponse.json();
 
-          // Add the product name to the discount object
+          // Add the product name and created date to the discount object
           return { ...discount, productName: productData.name };
         })
       );
@@ -252,8 +252,13 @@ const DiscountsPage = () => {
               <div key={discount.id} className="discount-card">
                 <div className="discount-details">
                   <p className="discount-item-name">{discount.productName}</p>
+
                   <p className="discount-value">
                     Discount: {discount.discountPercentage}%
+                  </p>
+                  <p className="discount-date">
+                    Created On:{" "}
+                    {new Date(discount.createdAt).toLocaleDateString()}
                   </p>
                 </div>
                 <button
