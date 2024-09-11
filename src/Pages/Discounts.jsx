@@ -14,10 +14,29 @@ const DiscountsPage = () => {
 
       {/* Mid container */}
       <div className="mid-container">
-        <div className="discount-text-container">
-          <p>Discount</p>
+        <div className="discount-container">
+          <div className="discount-text-container">
+            <p>Discount</p>
+          </div>
         </div>
-        {/* Add more content here */}
+
+        {/* Category section */}
+        <div className="category-container">
+          <p className="category-label">Category</p>
+
+          <select
+            id="category-dropdown"
+            className="category-dropdown"
+            aria-label="Select a category"
+          >
+            <option value="electronics">Electronics</option>
+            <option value="clothing">Clothing</option>
+            <option value="home-appliances">Home Appliances</option>
+            <option value="books">Books</option>
+          </select>
+
+          <p className="item-text">Item</p>
+        </div>
       </div>
 
       {/* Right-side container */}
