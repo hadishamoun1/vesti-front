@@ -39,15 +39,32 @@ const DiscountsPage = () => {
     }
   };
 
-  // Function to fetch active discounts
+  // Function to fetch active discounts and product details
   const fetchActiveDiscounts = async () => {
     try {
       const response = await fetch(
         `http://localhost:3000/discounts/active?storeId=${storeId}`
       );
-      const data = await response.json();
-      console.log("Fetched active discounts:", data);
-      setActiveDiscounts(data);
+      const discountsData = await response.json();
+
+      // Fetch product details for each discount
+      const discountsWithProductNames = await Promise.all(
+        discountsData.map(async (discount) => {
+          const productResponse = await fetch(
+            `http://localhost:3000/products/${discount.productId}`
+          );
+          const productData = await productResponse.json();
+
+          // Add the product name to the discount object
+          return { ...discount, productName: productData.name };
+        })
+      );
+
+      console.log(
+        "Fetched active discounts with product names:",
+        discountsWithProductNames
+      );
+      setActiveDiscounts(discountsWithProductNames);
     } catch (error) {
       console.error("Error fetching active discounts:", error);
     }
@@ -237,10 +254,6 @@ const DiscountsPage = () => {
                   <p className="discount-item-name">{discount.productName}</p>
                   <p className="discount-value">
                     Discount: {discount.discountPercentage}%
-                  </p>
-                  <p className="discount-date">
-                    Valid Until:{" "}
-                    {new Date(discount.endDate).toLocaleDateString()}
                   </p>
                 </div>
                 <button
