@@ -140,20 +140,17 @@ const DiscountsPage = () => {
   // Handle disable button click
   const handleDisableDiscount = async (discountId) => {
     try {
-      const response = await fetch(
-        `http://localhost:3000/products/discounts/disable`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
-          },
-          body: JSON.stringify({ discountId }),
-        }
-      );
+      const response = await fetch("http://localhost:3000/discounts/disable", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
+        },
+        body: JSON.stringify({ discountId }),
+      });
 
       if (response.ok) {
-        alert("Discount disabled successfully!");
+        alert("Discount disabled and notifications removed successfully!");
         fetchActiveDiscounts(); // Refresh active discounts after disabling
       } else {
         const errorData = await response.json();
