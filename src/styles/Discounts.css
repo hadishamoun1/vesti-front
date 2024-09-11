@@ -25,7 +25,7 @@
   margin-top: 20px;
   border-radius: 20px;
   flex: 1;
-  height: 50vh;
+  height: 54vh;
   background-color: #ffffff;
   display: flex;
   flex-direction: column;
@@ -123,4 +123,46 @@ p {
   border-radius: 8px;
   border: 1px solid rgba(0, 0, 0, 0.2);
   font-size: 16px;
+  margin-bottom: 15px; /* Add some space between the dropdown and the text below */
+}
+
+.discount-text {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.discount-input {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  font-size: 16px;
+  margin-bottom: 15px; /* Add some space between the input and the text below */
+}
+
+/* Button container styles */
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 50px;
+  padding: 20px; /* Adds some padding to the button area */
+}
+
+/* Button styling */
+.submit-button {
+  background-color: #007bff; /* Primary color */
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 40%;
+}
+
+.submit-button:hover {
+  background-color: #0056b3; /* Darker shade for hover effect */
 }

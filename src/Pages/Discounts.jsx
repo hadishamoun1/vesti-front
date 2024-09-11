@@ -47,6 +47,21 @@ const DiscountsPage = () => {
             <option value="item3">Item 3</option>
             <option value="item4">Item 4</option>
           </select>
+
+          <p className="discount-text">Discount</p>
+
+          <input
+            type="number"
+            id="discount-input"
+            className="discount-input"
+            placeholder="Enter discount"
+            aria-label="Enter discount amount"
+          />
+        </div>
+
+        {/* Button section */}
+        <div className="button-container">
+          <button className="submit-button">Notify Users</button>
         </div>
       </div>
 
