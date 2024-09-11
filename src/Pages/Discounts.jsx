@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { jwtDecode } from "jwt-decode"; // Correct import
+import { jwtDecode } from "jwt-decode";// Correct import
 import "../styles/Discounts.css";
 
 const DiscountsPage = () => {
@@ -8,7 +8,7 @@ const DiscountsPage = () => {
   const [selectedItem, setSelectedItem] = useState("");
   const [discountValue, setDiscountValue] = useState("");
   const [activeDiscounts, setActiveDiscounts] = useState([]);
-  const [discountHistory, setDiscountHistory] = useState([]); // New state for history
+  const [discountHistory, setDiscountHistory] = useState([]); 
 
   // Function to get storeId from JWT token
   const getStoreIdFromToken = () => {
@@ -56,7 +56,6 @@ const DiscountsPage = () => {
           );
           const productData = await productResponse.json();
 
-          // Add the product name and created date to the discount object
           return { ...discount, productName: productData.name };
         })
       );
