@@ -36,6 +36,17 @@ const DiscountsPage = () => {
           </select>
 
           <p className="item-text">Item</p>
+
+          <select
+            id="item-dropdown"
+            className="item-dropdown"
+            aria-label="Select an item"
+          >
+            <option value="item1">Item 1</option>
+            <option value="item2">Item 2</option>
+            <option value="item3">Item 3</option>
+            <option value="item4">Item 4</option>
+          </select>
         </div>
       </div>
 
