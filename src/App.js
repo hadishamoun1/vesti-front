@@ -7,6 +7,7 @@ import Layout from "./Layout";
 import CreateStorePage from "./Pages/CreateStore";
 import ViewStore from "./Pages/ViewStore";
 import CreateProduct from "./Pages/CreateProduct";
+import DiscountPage from "./Pages/Discounts";
 
 function App() {
   return (
@@ -45,6 +46,14 @@ function App() {
             element={
               <Layout>
                 <CreateProduct />
+              </Layout>
+            }
+          />
+          <Route
+            path="/discounts"
+            element={
+              <Layout>
+                <DiscountPage />
               </Layout>
             }
           />
