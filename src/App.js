@@ -11,6 +11,7 @@ import CreateProduct from "./Pages/CreateProduct";
 import DiscountPage from "./Pages/Discounts";
 import AdminPanel from "./Pages/adminUsers";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Unauthorized from "./components/unauthorized";
 
 function App() {
   return (
@@ -81,6 +82,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="/unauthorized" element={<Unauthorized />} />
         </Routes>
       </div>
     </Router>
