@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode"; // Import jwt-decode
+import { jwtDecode } from "jwt-decode"; 
 import "../styles/Login.css";
 
 const LoginPage = () => {
@@ -26,14 +26,13 @@ const LoginPage = () => {
       if (response.ok) {
         const { token } = data;
 
-        // Decode the JWT token
+      
         const decodedToken = jwtDecode(token);
         const userRole = decodedToken.role;
 
-        // Store the token in session storage
+        
         sessionStorage.setItem("jwtToken", token);
 
-        // Redirect based on user role
         if (userRole === "admin") {
           navigate("/admin");
         } else {

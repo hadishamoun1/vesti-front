@@ -8,6 +8,7 @@ import CreateStorePage from "./Pages/CreateStore";
 import ViewStore from "./Pages/ViewStore";
 import CreateProduct from "./Pages/CreateProduct";
 import DiscountPage from "./Pages/Discounts";
+import AdminPanel from "./Pages/adminUsers";
 
 function App() {
   return (
@@ -54,6 +55,14 @@ function App() {
             element={
               <Layout>
                 <DiscountPage />
+              </Layout>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <Layout>
+                <AdminPanel />
               </Layout>
             }
           />
