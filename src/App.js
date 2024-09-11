@@ -1,3 +1,4 @@
+// src/App.js
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import LoginPage from "./Pages/Login";
@@ -9,6 +10,7 @@ import ViewStore from "./Pages/ViewStore";
 import CreateProduct from "./Pages/CreateProduct";
 import DiscountPage from "./Pages/Discounts";
 import AdminPanel from "./Pages/adminUsers";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
@@ -17,53 +19,66 @@ function App() {
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
+
+          {/* Protected routes */}
           <Route
             path="/home"
             element={
-              <Layout>
-                <HomePage />
-              </Layout>
+              <ProtectedRoute allowedRoles={["user"]}>
+                <Layout>
+                  <HomePage />
+                </Layout>
+              </ProtectedRoute>
             }
           />
           <Route
             path="/create-store"
             element={
-              <Layout>
-                <CreateStorePage />
-              </Layout>
+              <ProtectedRoute allowedRoles={["user"]}>
+                <Layout>
+                  <CreateStorePage />
+                </Layout>
+              </ProtectedRoute>
             }
           />
-
           <Route
             path="/view-store"
             element={
-              <Layout>
-                <ViewStore />
-              </Layout>
+              <ProtectedRoute allowedRoles={["user"]}>
+                <Layout>
+                  <ViewStore />
+                </Layout>
+              </ProtectedRoute>
             }
           />
           <Route
             path="/products"
             element={
-              <Layout>
-                <CreateProduct />
-              </Layout>
+              <ProtectedRoute allowedRoles={["user"]}>
+                <Layout>
+                  <CreateProduct />
+                </Layout>
+              </ProtectedRoute>
             }
           />
           <Route
             path="/discounts"
             element={
-              <Layout>
-                <DiscountPage />
-              </Layout>
+              <ProtectedRoute allowedRoles={["user"]}>
+                <Layout>
+                  <DiscountPage />
+                </Layout>
+              </ProtectedRoute>
             }
           />
+
+          {/* Admin-only route */}
           <Route
             path="/admin"
             element={
-              <Layout>
+              <ProtectedRoute allowedRoles={["admin"]}>
                 <AdminPanel />
-              </Layout>
+              </ProtectedRoute>
             }
           />
         </Routes>
