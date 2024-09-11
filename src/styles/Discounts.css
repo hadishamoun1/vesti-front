@@ -28,10 +28,22 @@
   height: 50vh;
   background-color: #ffffff;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
-
+  padding-top: 20px;
   box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Container for the Discount text */
+.discount-text-container {
+  background-color: white;
+  padding: 16px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  width: 40%;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 /* Right-side container styles */
@@ -56,10 +68,12 @@
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
   border-radius: 8px;
   text-align: center;
+  width: 50%;
 }
 
 /* Additional text styling */
-.text-container p {
-  font-size: 18px;
+.text-container p,
+.discount-text-container p {
+  font-size: 25px;
   font-weight: bold;
 }

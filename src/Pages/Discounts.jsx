@@ -14,7 +14,9 @@ const DiscountsPage = () => {
 
       {/* Mid container */}
       <div className="mid-container">
-        <p>Mid Container</p>
+        <div className="discount-text-container">
+          <p>Discount</p>
+        </div>
         {/* Add more content here */}
       </div>
 
