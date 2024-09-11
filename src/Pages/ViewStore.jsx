@@ -1,4 +1,3 @@
-// src/components/ViewStore.js
 import React, { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import "../styles/ViewStore.css";
@@ -17,9 +16,11 @@ const ViewStore = () => {
           const storeIdFromToken = decodedToken.storeId;
           setStoreId(storeIdFromToken);
 
+          const baseUrl = "http://localhost:3000";
+
           // Fetch the store data
           const storeResponse = await fetch(
-            `http://localhost:3000/stores/${storeIdFromToken}`,
+            `${baseUrl}/stores/${storeIdFromToken}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -28,17 +29,16 @@ const ViewStore = () => {
           );
           if (storeResponse.ok) {
             const storeData = await storeResponse.json();
-            const baseUrl = "http://localhost:3000";
-            const imageUrl = `${baseUrl}${storeData.pictureUrl}`;
-            console.log("Image URL:", imageUrl);
-            setStoreImage(imageUrl);
+            const storeImageUrl = `${baseUrl}${storeData.pictureUrl}`;
+            console.log("Store Image URL:", storeImageUrl);
+            setStoreImage(storeImageUrl);
           } else {
             console.error("Failed to fetch store data");
           }
 
           // Fetch products
           const productsResponse = await fetch(
-            `http://localhost:3000/products/products/${storeIdFromToken}`,
+            `${baseUrl}/products/products/${storeIdFromToken}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -47,7 +47,20 @@ const ViewStore = () => {
           );
           if (productsResponse.ok) {
             const data = await productsResponse.json();
-            setProducts(data);
+            console.log("Products Response Data:", data); 
+
+            const updatedProducts = data.map((product) => {
+              console.log("Product Data:", product); 
+              const productImageUrl = product.imageUrl
+                ? `${baseUrl}${product.imageUrl}`
+                : ""; 
+              console.log("Product Image URL:", productImageUrl);
+              return {
+                ...product,
+                pictureUrl: productImageUrl,
+              };
+            });
+            setProducts(updatedProducts);
           } else {
             console.error("Failed to fetch products");
           }
