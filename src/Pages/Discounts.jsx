@@ -8,6 +8,7 @@ const DiscountsPage = () => {
   const [selectedItem, setSelectedItem] = useState("");
   const [discountValue, setDiscountValue] = useState("");
   const [activeDiscounts, setActiveDiscounts] = useState([]);
+  const [discountHistory, setDiscountHistory] = useState([]); // New state for history
 
   // Function to get storeId from JWT token
   const getStoreIdFromToken = () => {
@@ -70,6 +71,37 @@ const DiscountsPage = () => {
     }
   };
 
+  // Function to fetch discount history and product details
+  const fetchDiscountHistory = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/discounts/history?storeId=${storeId}`
+      );
+      const historyData = await response.json();
+
+      // Fetch product details for each discount history
+      const historyWithProductNames = await Promise.all(
+        historyData.map(async (discount) => {
+          const productResponse = await fetch(
+            `http://localhost:3000/products/${discount.productId}`
+          );
+          const productData = await productResponse.json();
+
+          // Add the product name and created date to the discount object
+          return { ...discount, productName: productData.name };
+        })
+      );
+
+      console.log(
+        "Fetched discount history with product names:",
+        historyWithProductNames
+      );
+      setDiscountHistory(historyWithProductNames);
+    } catch (error) {
+      console.error("Error fetching discount history:", error);
+    }
+  };
+
   // Effect to fetch items when category changes
   useEffect(() => {
     if (category) {
@@ -77,9 +109,10 @@ const DiscountsPage = () => {
     }
   }, [category]);
 
-  // Effect to fetch active discounts on component mount
+  // Effect to fetch active discounts and discount history on component mount
   useEffect(() => {
     fetchActiveDiscounts();
+    fetchDiscountHistory();
   }, []);
 
   // Handle category change
@@ -152,6 +185,7 @@ const DiscountsPage = () => {
       if (response.ok) {
         alert("Discount disabled and notifications removed successfully!");
         fetchActiveDiscounts(); // Refresh active discounts after disabling
+        fetchDiscountHistory(); // Refresh discount history after disabling
       } else {
         const errorData = await response.json();
         alert(`Error disabling discount: ${errorData.message}`);
@@ -166,10 +200,38 @@ const DiscountsPage = () => {
     <div className="discounts-container">
       {/* Left-side container */}
       <div className="left-container">
-        <div className="text-container">
-          <p>Discount History</p>
+        <div className="active-container">
+          <div className="text-container">
+            <p>Discount History</p>
+          </div>
         </div>
-        {/* Add more content here */}
+
+        <div className="discounts-list">
+          {discountHistory.length > 0 ? (
+            discountHistory.map((discount) => (
+              <div key={discount.id} className="discount-card">
+                <div className="discount-details">
+                  <p className="discount-item-name">{discount.productName}</p>
+                  <p className="discount-value">
+                    Discount: {discount.discountPercentage}%
+                  </p>
+                  <p className="discount-date">
+                    Created On:{" "}
+                    {new Date(discount.createdAt).toLocaleDateString()}
+                  </p>
+                </div>
+                <button
+                  className="disable-button"
+                  onClick={() => handleDisableDiscount(discount.id)}
+                >
+                  Disable
+                </button>
+              </div>
+            ))
+          ) : (
+            <p>No discount history available.</p>
+          )}
+        </div>
       </div>
 
       {/* Mid container */}
@@ -227,8 +289,6 @@ const DiscountsPage = () => {
             onChange={handleDiscountChange}
           />
         </div>
-
-        {/* Button section */}
         <div className="button-container">
           <button className="submit-button" onClick={handleNotifyUsers}>
             Notify Users
@@ -249,7 +309,6 @@ const DiscountsPage = () => {
               <div key={discount.id} className="discount-card">
                 <div className="discount-details">
                   <p className="discount-item-name">{discount.productName}</p>
-
                   <p className="discount-value">
                     Discount: {discount.discountPercentage}%
                   </p>
