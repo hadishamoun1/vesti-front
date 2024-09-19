@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode"; 
+import { jwtDecode } from "jwt-decode";
 import "../styles/Login.css";
 
 const LoginPage = () => {
@@ -26,17 +26,15 @@ const LoginPage = () => {
       if (response.ok) {
         const { token } = data;
 
-      
         const decodedToken = jwtDecode(token);
         const userRole = decodedToken.role;
 
-        
         sessionStorage.setItem("jwtToken", token);
 
         if (userRole === "admin") {
           navigate("/admin");
         } else {
-          navigate("/home");
+          navigate("/loading");
         }
       } else {
         setError(data.message);

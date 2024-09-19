@@ -3,7 +3,6 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import LoginPage from "./Pages/Login";
 import SignupPage from "./Pages/Signup";
-import HomePage from "./Pages/Home";
 import Layout from "./Layout";
 import CreateStorePage from "./Pages/CreateStore";
 import ViewStore from "./Pages/ViewStore";
@@ -12,6 +11,7 @@ import DiscountPage from "./Pages/Discounts";
 import AdminPanel from "./Pages/adminUsers";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Unauthorized from "./components/unauthorized";
+import LoaderPage from "./components/Loader";
 
 function App() {
   return (
@@ -21,50 +21,38 @@ function App() {
           <Route path="/" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
 
-          {/* Protected routes */}
-          <Route
-            path="/home"
-            element={
-              
-                <Layout>
-                  <HomePage />
-                </Layout>
-            }
-          />
+       
+          <Route path="/loading" element={<LoaderPage />} />
           <Route
             path="/create-store"
             element={
-              
-                <Layout>
-                  <CreateStorePage />
-                </Layout>
+              <Layout>
+                <CreateStorePage />
+              </Layout>
             }
           />
           <Route
             path="/view-store"
             element={
-              
-                <Layout>
-                  <ViewStore />
-                </Layout>
+              <Layout>
+                <ViewStore />
+              </Layout>
             }
           />
           <Route
             path="/products"
             element={
-              
-                <Layout>
-                  <CreateProduct />
-                </Layout>
+              <Layout>
+                <CreateProduct />
+              </Layout>
             }
           />
           <Route
             path="/discounts"
             element={
-              
-                <Layout>
-                  <DiscountPage />
-                </Layout>
+              <Layout>
+                <DiscountPage />
+              </Layout>
             }
           />
 
