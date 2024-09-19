@@ -1,4 +1,4 @@
-/* Styling for SignupPage */
+
 
 * {
   margin: 0;
@@ -141,4 +141,77 @@ body {
 
 .login-link a:hover {
   text-decoration: underline;
+}
+
+/* Media Queries for Responsiveness */
+
+/* Large Desktops (1200px and up) */
+@media (min-width: 1200px) {
+  .signup-container {
+    padding: 50px;
+    max-width: 500px;
+  }
+  .signup-title {
+    font-size: 2.5rem;
+  }
+  .submit-btn {
+    font-size: 1.25rem;
+  }
+}
+
+/* Tablets (768px to 1199px) */
+@media (max-width: 1199px) {
+  .signup-page {
+    padding-left: 50px; 
+  }
+  .signup-container {
+    max-width: 400px;
+    padding: 30px;
+  }
+  .signup-title {
+    font-size: 2rem;
+  }
+  .submit-btn {
+    font-size: 1.125rem;
+  }
+}
+
+/* Small Tablets and Larger Phones (576px to 767px) */
+@media (max-width: 767px) {
+  .signup-page {
+    padding-left: 30px;
+  }
+  .signup-container {
+    max-width: 350px;
+    padding: 20px;
+  }
+  .signup-title {
+    font-size: 1.75rem;
+  }
+  .submit-btn {
+    font-size: 1rem;
+    padding: 12px 24px;
+  }
+}
+
+/* Mobile Devices (up to 575px) */
+@media (max-width: 575px) {
+  .signup-page {
+    padding-left: 15px; 
+  }
+  .signup-container {
+    max-width: 320px;
+    padding: 15px;
+  }
+  .signup-title {
+    font-size: 1.5rem;
+  }
+  .submit-btn {
+    font-size: 0.875rem;
+    padding: 10px 20px;
+  }
+  .login-link p,
+  .login-link a {
+    font-size: 0.875rem !important;
+  }
 }
