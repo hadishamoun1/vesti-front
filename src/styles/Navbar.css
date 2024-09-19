@@ -56,8 +56,12 @@
 
 /* Logo styles */
 .navbar-logo .logo-image {
-  height: 50px;
+  height: 45px;
   margin-bottom: 5px;
+}
+
+.logo-image {
+  margin-top: 5px;
 }
 
 /* Dropdown menu styles */
@@ -78,6 +82,7 @@
   margin: 0;
   list-style: none;
   width: 120px;
+  font-weight: 400;
 }
 
 .dropdown-menu.show {

@@ -112,6 +112,7 @@ const CreateStorePage = () => {
     <div className="store-container">
       <div className="form-container">
         <div className="form-group">
+          <h2 className="form-title">Create store</h2>
           <label htmlFor="store-name">Store</label>
           <input
             id="store-name"

@@ -21,13 +21,8 @@ const NavBar = () => {
         {/* Navigation Links */}
         <ul className={`navbar-menu ${menuOpen ? "active" : ""}`}>
           <li className="navbar-item">
-            <Link to="/discounts" className="navbar-link">
-              Discounts
-            </Link>
-          </li>
-          <li className="navbar-item">
             <Link to="/" className="navbar-link">
-              <img src="path/to/logo.png" alt="Logo" className="logo-image" />{" "}
+              <img src="assets/white-logo.png" alt="Logo" className="logo-image" />{" "}
               {/* Replace with your logo path */}
             </Link>
           </li>
@@ -47,6 +42,11 @@ const NavBar = () => {
           <li className="navbar-item">
             <Link to="/products" className="navbar-link">
               Products
+            </Link>
+          </li>
+          <li className="navbar-item">
+            <Link to="/discounts" className="navbar-link">
+              Discounts
             </Link>
           </li>
         </ul>

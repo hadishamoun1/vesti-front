@@ -192,6 +192,7 @@ const CreateProductPage = () => {
     <div className="product-container">
       <div className="form-container">
         <div className="form-group">
+          <h2 className="form-title">Add product</h2>
           <label htmlFor="product-name">Product Name</label>
           <input
             id="product-name"
@@ -234,10 +235,10 @@ const CreateProductPage = () => {
             onChange={(e) => setProductCategory(e.target.value)}
           >
             <option value="">Select a Category</option>
-            <option value="electronics">Electronics</option>
-            <option value="clothing">Clothing</option>
-            <option value="home">Home</option>
-            <option value="books">Books</option>
+            <option value="hoodies">hoodies</option>
+            <option value="t-shirts">t-shirts</option>
+            <option value="shirts">shirts</option>
+            <option value="long shirts">long shirts</option>
             {/* Add more categories as needed */}
           </select>
         </div>

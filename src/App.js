@@ -25,51 +25,46 @@ function App() {
           <Route
             path="/home"
             element={
-              <ProtectedRoute allowedRoles={["user"]}>
+              
                 <Layout>
                   <HomePage />
                 </Layout>
-              </ProtectedRoute>
             }
           />
           <Route
             path="/create-store"
             element={
-              <ProtectedRoute allowedRoles={["user"]}>
+              
                 <Layout>
                   <CreateStorePage />
                 </Layout>
-              </ProtectedRoute>
             }
           />
           <Route
             path="/view-store"
             element={
-              <ProtectedRoute allowedRoles={["user"]}>
+              
                 <Layout>
                   <ViewStore />
                 </Layout>
-              </ProtectedRoute>
             }
           />
           <Route
             path="/products"
             element={
-              <ProtectedRoute allowedRoles={["user"]}>
+              
                 <Layout>
                   <CreateProduct />
                 </Layout>
-              </ProtectedRoute>
             }
           />
           <Route
             path="/discounts"
             element={
-              <ProtectedRoute allowedRoles={["user"]}>
+              
                 <Layout>
                   <DiscountPage />
                 </Layout>
-              </ProtectedRoute>
             }
           />
 

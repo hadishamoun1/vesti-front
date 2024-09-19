@@ -5,7 +5,8 @@
 }
 
 .left-container {
-  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   margin-left: 20px;
   flex: 1;
   background-color: #ffffff;
@@ -13,50 +14,38 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: stretch;
-  border-radius: 20px;
   margin-top: 20px;
-  padding: 20px;
+  padding: 8px 16px;
   height: calc(91vh - 40px);
   overflow-y: auto;
 }
 /* Mid container styles */
 .mid-container {
+  height: calc(91vh - 40px);
   margin-left: 50px;
   margin-right: 50px;
   margin-top: 20px;
-  border-radius: 20px;
   flex: 1;
-  height: 54vh;
   background-color: #ffffff;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding-top: 20px;
-  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-/* Container for the Discount text */
-.discount-text-container {
-  background-color: white;
-  padding: 16px;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-  border-radius: 8px;
-  width: 40%;
-  text-align: center;
-  margin-bottom: 20px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
 /* Right-side container styles */
 .right-container {
   display: flex;
   flex-direction: column;
-  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
-  border-radius: 20px;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   margin-right: 20px;
   margin-top: 20px;
   flex: 1;
   background-color: #ffffff;
-  padding: 20px;
+  padding: 8px 16px;
   height: calc(
     91vh - 40px
   ); 
@@ -65,42 +54,35 @@
 
 /* Text container with shadow effect */
 .text-container {
-  background-color: white;
-  padding: 16px;
-  margin-top: 16px;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-  border-radius: 8px;
+  margin-top: 8px;
   text-align: center;
-  width: 50%;
 }
 
 /* Additional text styling */
 .text-container p,
 p {
-  font-size: 25px;
-  font-weight: bold;
+  font-size: 22px;
+  font-weight: 400;
 }
 
 .category-container {
   width: 90%;
-  margin-left: 30px;
-  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
 
 .discount-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   margin-bottom: 20px;
 }
 
 .category-label {
   font-size: 20px;
-  font-weight: bold;
+  font-weight: 400;
   margin-bottom: 15px;
 }
 
@@ -116,7 +98,7 @@ p {
 
 .item-text {
   font-size: 20px;
-  font-weight: bold;
+  font-weight: 400;
   margin-bottom: 15px;
 }
 
@@ -132,7 +114,7 @@ p {
 
 .discount-text {
   font-size: 20px;
-  font-weight: bold;
+  font-weight: 400;
   margin-bottom: 15px;
 }
 
@@ -197,12 +179,13 @@ p {
 
 /* Discount card details */
 .discount-card {
-  background-color: #ffffff;
+  background-color: #fafafa;
   border-radius: 8px;
   padding: 15px;
-  margin-bottom: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 16px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
   max-width: 100%;
@@ -211,8 +194,19 @@ p {
 
 /* Discount card details */
 .discount-details {
-  flex: 1;
-  text-align: left;
+  display: flex;
+  gap: 16px;
+}
+
+.discount-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.discount-item-image{
+  width: 100px;
+  height: 100px;
+  border-radius: 5px;
 }
 
 .discount-item-name {
@@ -239,9 +233,29 @@ p {
   background-color: #c9302c;
 }
 
-.active-container {
+.divider{
+  margin-top: 8px;
+  border: none;
+  height: 1px;  
+  background: linear-gradient(90deg, #167ce2 0%, #6dd7fd 100%);
+
+}
+
+.empty-state-container{
   width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 50px;
+  height: calc(91vh - 160px);
+  display:grid;
+  place-items:center;
+  color: #bfbfbf;
+  text-align: center;
+}
+
+.empty-state-icon{
+  font-size: 40px;
+  width: 100%;
+
+}
+
+.empty-state-text{
+  font-size:15px
 }

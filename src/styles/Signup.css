@@ -13,11 +13,12 @@ body {
 .signup-page {
   height: 100vh;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   background-image: url("../Images/LoginImage.jpg");
   background-size: cover;
   background-position: center;
+  padding-left: 350px;
 }
 
 .signup-container {
@@ -133,7 +134,7 @@ body {
 
 .login-link a {
   font-size: 15px !important;
-  color: #6b73ff;
+  color: rgb(21, 110, 243);
   text-decoration: none;
   font-weight: 600;
 }

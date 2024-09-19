@@ -1,0 +1,52 @@
+.svg-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 60px);
+  }
+
+  .loading-svg {
+    width: 150px;
+    height: 150px;
+    animation: rotate 2s linear infinite;
+  }
+
+  .loading-path {
+    stroke: #53C9FC;
+    stroke-width: 2;
+    fill: none;
+    stroke-dasharray: 150;
+    stroke-dashoffset: 150;
+    animation: dash 2s ease-in-out infinite;
+  }
+
+  .logo {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+  }
+
+  @keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes dash {
+    0% {
+      stroke-dasharray: 1, 150;
+      stroke-dashoffset: 0;
+    }
+    50% {
+      stroke-dasharray: 90, 150;
+      stroke-dashoffset: -40;
+    }
+    100% {
+      stroke-dasharray: 90, 150;
+      stroke-dashoffset: -120;
+    }
+  }

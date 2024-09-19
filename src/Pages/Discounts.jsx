@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { jwtDecode } from "jwt-decode";// Correct import
+import { jwtDecode } from "jwt-decode";
 import "../styles/Discounts.css";
+import { BsClockHistory } from "react-icons/bs";
+import { TbDiscount } from "react-icons/tb";
 
 const DiscountsPage = () => {
   const [category, setCategory] = useState("");
@@ -8,9 +10,12 @@ const DiscountsPage = () => {
   const [selectedItem, setSelectedItem] = useState("");
   const [discountValue, setDiscountValue] = useState("");
   const [activeDiscounts, setActiveDiscounts] = useState([]);
-  const [discountHistory, setDiscountHistory] = useState([]); 
+  const [discountHistory, setDiscountHistory] = useState([]);
+  const [storeId, setStoreId] = useState(null);
+  const [productCache, setProductCache] = useState({});
+  const [productsLoaded, setProductsLoaded] = useState(false); // New state to track products loading
+  const apiUrl = "http://localhost:3000"; // Base URL for your API
 
-  // Function to get storeId from JWT token
   const getStoreIdFromToken = () => {
     const token = sessionStorage.getItem("jwtToken");
     if (token) {
@@ -24,112 +29,109 @@ const DiscountsPage = () => {
     return null;
   };
 
-  const storeId = getStoreIdFromToken();
+  useEffect(() => {
+    const storeIdFromToken = getStoreIdFromToken();
+    setStoreId(storeIdFromToken);
 
-  // Function to fetch items based on category and storeId
+    if (storeIdFromToken) {
+      fetchAllProducts();
+    }
+  }, []);
+
+  const fetchAllProducts = async () => {
+    try {
+      const response = await fetch(`${apiUrl}/products`);
+      const data = await response.json();
+      const productMap = data.reduce((acc, product) => {
+        acc[product.id] = product;
+        return acc;
+      }, {});
+      setProductCache(productMap);
+      setProductsLoaded(true); // Set productsLoaded to true once products are fetched
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  };
+
   const fetchItems = async (selectedCategory) => {
+    if (!storeId) return;
     try {
       const response = await fetch(
-        `http://localhost:3000/products/category/?category=${selectedCategory}&storeId=${storeId}`
+        `${apiUrl}/products/category/?category=${selectedCategory}&storeId=${storeId}`
       );
       const data = await response.json();
-      console.log("Fetched items:", data);
       setItems(data);
     } catch (error) {
       console.error("Error fetching items:", error);
     }
   };
 
-  // Function to fetch active discounts and product details
   const fetchActiveDiscounts = async () => {
+    if (!storeId || !productsLoaded) return; // Ensure products are loaded
     try {
       const response = await fetch(
-        `http://localhost:3000/discounts/active?storeId=${storeId}`
+        `${apiUrl}/discounts/active?storeId=${storeId}`
       );
       const discountsData = await response.json();
-
-      // Fetch product details for each discount
-      const discountsWithProductNames = await Promise.all(
-        discountsData.map(async (discount) => {
-          const productResponse = await fetch(
-            `http://localhost:3000/products/${discount.productId}`
-          );
-          const productData = await productResponse.json();
-
-          return { ...discount, productName: productData.name };
-        })
-      );
-
-      console.log(
-        "Fetched active discounts with product names:",
-        discountsWithProductNames
-      );
+      const discountsWithProductNames = discountsData.map((discount) => ({
+        ...discount,
+        product: productCache[discount.productId] || {
+          name: "Unknown Product",
+          imageUrl: "",
+        },
+      }));
       setActiveDiscounts(discountsWithProductNames);
     } catch (error) {
       console.error("Error fetching active discounts:", error);
     }
   };
 
-  // Function to fetch discount history and product details
   const fetchDiscountHistory = async () => {
+    if (!storeId || !productsLoaded) return; // Ensure products are loaded
     try {
       const response = await fetch(
-        `http://localhost:3000/discounts/history?storeId=${storeId}`
+        `${apiUrl}/discounts/history?storeId=${storeId}`
       );
       const historyData = await response.json();
-
-      // Fetch product details for each discount history
-      const historyWithProductNames = await Promise.all(
-        historyData.map(async (discount) => {
-          const productResponse = await fetch(
-            `http://localhost:3000/products/${discount.productId}`
-          );
-          const productData = await productResponse.json();
-
-          // Add the product name and created date to the discount object
-          return { ...discount, productName: productData.name };
-        })
-      );
-
-      console.log(
-        "Fetched discount history with product names:",
-        historyWithProductNames
-      );
+      const historyWithProductNames = historyData.map((discount) => ({
+        ...discount,
+        product: productCache[discount.productId] || {
+          name: "Unknown Product",
+          imageUrl: "",
+        },
+      }));
       setDiscountHistory(historyWithProductNames);
     } catch (error) {
       console.error("Error fetching discount history:", error);
     }
   };
 
-  // Effect to fetch items when category changes
   useEffect(() => {
-    if (category) {
+    if (category && storeId) {
       fetchItems(category);
     }
-  }, [category]);
+  }, [category, storeId]);
 
-  // Effect to fetch active discounts and discount history on component mount
   useEffect(() => {
-    fetchActiveDiscounts();
-    fetchDiscountHistory();
-  }, []);
+    if (storeId && productsLoaded) {
+      // Ensure products are loaded
+      fetchActiveDiscounts();
+      fetchDiscountHistory();
+    }
+  }, [storeId, productsLoaded]);
 
-  // Handle category change
   const handleCategoryChange = (event) => {
     setCategory(event.target.value);
   };
 
-  // Handle item change
   const handleItemChange = (event) => {
     setSelectedItem(event.target.value);
   };
 
-  // Handle discount change
   const handleDiscountChange = (event) => {
     setDiscountValue(event.target.value);
   };
 
-  // Handle button click
   const handleNotifyUsers = async () => {
     if (!selectedItem || !discountValue) {
       alert("Please select an item and enter a discount.");
@@ -137,28 +139,24 @@ const DiscountsPage = () => {
     }
 
     try {
-      const response = await fetch(
-        "http://localhost:3000/products/discounts/update",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
-          },
-          body: JSON.stringify({
-            storeId: storeId,
-            itemId: selectedItem,
-            discount: discountValue,
-          }),
-        }
-      );
+      const response = await fetch(`${apiUrl}/products/discounts/update`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("jwtToken")}`,
+        },
+        body: JSON.stringify({
+          storeId: storeId,
+          itemId: selectedItem,
+          discount: discountValue,
+        }),
+      });
 
       if (response.ok) {
-        const result = await response.json();
         alert("Discount updated successfully!");
         setSelectedItem("");
         setDiscountValue("");
-        fetchActiveDiscounts(); // Refresh active discounts after update
+        fetchActiveDiscounts();
       } else {
         const errorData = await response.json();
         alert(`Error updating discount: ${errorData.message}`);
@@ -169,10 +167,9 @@ const DiscountsPage = () => {
     }
   };
 
-  // Handle disable button click
   const handleDisableDiscount = async (discountId) => {
     try {
-      const response = await fetch("http://localhost:3000/discounts/disable", {
+      const response = await fetch(`${apiUrl}/discounts/disable`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -183,8 +180,8 @@ const DiscountsPage = () => {
 
       if (response.ok) {
         alert("Discount disabled and notifications removed successfully!");
-        fetchActiveDiscounts(); // Refresh active discounts after disabling
-        fetchDiscountHistory(); // Refresh discount history after disabling
+        fetchActiveDiscounts();
+        fetchDiscountHistory();
       } else {
         const errorData = await response.json();
         alert(`Error disabling discount: ${errorData.message}`);
@@ -199,9 +196,10 @@ const DiscountsPage = () => {
     <div className="discounts-container">
       {/* Left-side container */}
       <div className="left-container">
-        <div className="active-container">
+        <div className="discount-container">
           <div className="text-container">
             <p>Discount History</p>
+            <hr className="divider" />
           </div>
         </div>
 
@@ -210,19 +208,34 @@ const DiscountsPage = () => {
             discountHistory.map((discount) => (
               <div key={discount.id} className="discount-card">
                 <div className="discount-details">
-                  <p className="discount-item-name">{discount.productName}</p>
-                  <p className="discount-value">
-                    Discount: {discount.discountPercentage}%
-                  </p>
-                  <p className="discount-date">
-                    Created On:{" "}
-                    {new Date(discount.createdAt).toLocaleDateString()}
-                  </p>
+                  <img
+                    src={`${apiUrl}${discount.product.imageUrl}`}
+                    alt={discount.product.name}
+                    className="discount-item-image"
+                  />
+
+                  <div>
+                    <p className="discount-item-name">
+                      {discount.product.name}
+                    </p>
+                    <p className="discount-value">
+                      Discount: {discount.discountPercentage}%
+                    </p>
+                    <p className="discount-date">
+                      Created On:{" "}
+                      {new Date(discount.createdAt).toLocaleDateString()}
+                    </p>
+                  </div>
                 </div>
               </div>
             ))
           ) : (
-            <p>No discount history available.</p>
+            <div className="empty-state-container">
+              <div>
+                <BsClockHistory className="empty-state-icon" />
+                <p className="empty-state-text">No history available</p>
+              </div>
+            </div>
           )}
         </div>
       </div>
@@ -230,8 +243,9 @@ const DiscountsPage = () => {
       {/* Mid container */}
       <div className="mid-container">
         <div className="discount-container">
-          <div className="discount-text-container">
+          <div className="text-container">
             <p>Discount</p>
+            <hr className="divider" />
           </div>
         </div>
 
@@ -247,10 +261,10 @@ const DiscountsPage = () => {
             onChange={handleCategoryChange}
           >
             <option value="">Select a category</option>
-            <option value="electronics">Electronics</option>
-            <option value="clothing">Clothing</option>
-            <option value="home-appliances">Home Appliances</option>
-            <option value="books">Books</option>
+            <option value="hoodies">hoodies</option>
+            <option value="shirt">shirt</option>
+            <option value="t-shirts">t-shirts</option>
+            <option value="long shirts">long shirts</option>
           </select>
 
           <p className="item-text">Item</p>
@@ -271,7 +285,6 @@ const DiscountsPage = () => {
           </select>
 
           <p className="discount-text">Discount</p>
-
           <input
             type="number"
             id="discount-input"
@@ -280,6 +293,7 @@ const DiscountsPage = () => {
             aria-label="Enter discount amount"
             value={discountValue}
             onChange={handleDiscountChange}
+            min="0"
           />
         </div>
         <div className="button-container">
@@ -291,24 +305,36 @@ const DiscountsPage = () => {
 
       {/* Right-side container */}
       <div className="right-container">
-        <div className="active-container">
+        <div className="discount-container">
           <div className="text-container">
             <p>Active Discounts</p>
+            <hr className="divider" />
           </div>
         </div>
+
         <div className="discounts-list">
           {activeDiscounts.length > 0 ? (
             activeDiscounts.map((discount) => (
               <div key={discount.id} className="discount-card">
                 <div className="discount-details">
-                  <p className="discount-item-name">{discount.productName}</p>
-                  <p className="discount-value">
-                    Discount: {discount.discountPercentage}%
-                  </p>
-                  <p className="discount-date">
-                    Created On:{" "}
-                    {new Date(discount.createdAt).toLocaleDateString()}
-                  </p>
+                  <img
+                    src={`${apiUrl}${discount.product.imageUrl}`}
+                    alt={discount.product.name}
+                    className="discount-item-image"
+                  />
+
+                  <div className="discount-info">
+                    <p className="discount-item-name">
+                      {discount.product.name}
+                    </p>
+                    <p className="discount-value">
+                      Discount: {discount.discountPercentage}%
+                    </p>
+                    <p className="discount-date">
+                      Created On:{" "}
+                      {new Date(discount.createdAt).toLocaleDateString()}
+                    </p>
+                  </div>
                 </div>
                 <button
                   className="disable-button"
@@ -319,7 +345,12 @@ const DiscountsPage = () => {
               </div>
             ))
           ) : (
-            <p>No active discounts available.</p>
+            <div className="empty-state-container">
+              <div>
+                <TbDiscount className="empty-state-icon" />
+                <p className="empty-state-text">No active discounts</p>
+              </div>
+            </div>
           )}
         </div>
       </div>
