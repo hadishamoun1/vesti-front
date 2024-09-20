@@ -29,7 +29,7 @@ const LocationMarker = ({ setLocation, position, setPosition }) => {
     click(event) {
       const { lat, lng } = event.latlng;
       setPosition([lat, lng]);
-      setLocation({ lat, lng });
+      setLocation({ lat, lng }); // Update location state when marker is placed
     },
   });
 
@@ -41,23 +41,26 @@ const LocationMarker = ({ setLocation, position, setPosition }) => {
 };
 
 const CreateStorePage = () => {
+  document.title = "Edit Store";
   const [image, setImage] = useState(null);
   const [mapOpen, setMapOpen] = useState(false);
   const [location, setLocation] = useState({ lat: null, lng: null });
-  const [position, setPosition] = useState([37.7749, -122.4194]); 
+  const [position, setPosition] = useState([37.7749, -122.4194]);
   const [storeName, setStoreName] = useState("");
   const [storeDescription, setStoreDescription] = useState("");
-  const [successMessage, setSuccessMessage] = useState(""); 
+  const [successMessage, setSuccessMessage] = useState("");
 
   // Get the JWT token from session storage and decode it
   const token = sessionStorage.getItem("jwtToken");
   let storeId = null;
   if (token) {
     const decodedToken = jwtDecode(token);
-    storeId = decodedToken.storeId; 
+    storeId = decodedToken.storeId;
   }
 
-  const handleDoneClick = async () => {
+  const handleFormSubmit = async () => {
+    console.log("Form submission initiated...");
+
     if (!storeId) {
       console.error("Store ID is not available.");
       return;
@@ -68,22 +71,20 @@ const CreateStorePage = () => {
       return;
     }
 
-    // Construct the data to send to the API
     const formData = new FormData();
     formData.append("name", storeName);
     formData.append("description", storeDescription);
-    formData.append(
-      "location",
-      JSON.stringify({
-        type: "Point",
-        coordinates: [location.lng, location.lat], 
-      })
-    );
+    const locationGeoJSON = {
+      type: "Point",
+      coordinates: [location.lng, location.lat], // Order is [longitude, latitude]
+    };
+    formData.append("location", JSON.stringify(locationGeoJSON));
     if (image) {
-      formData.append("picture", image); 
+      formData.append("picture", image);
     }
 
     try {
+      console.log("Sending request to update store...");
       const response = await fetch(
         `http://localhost:3000/stores/update/${storeId}`,
         {
@@ -98,14 +99,19 @@ const CreateStorePage = () => {
       if (response.ok) {
         const result = await response.json();
         console.log("Store updated successfully:", result);
-        setSuccessMessage("Store updated successfully!"); 
-        setMapOpen(false); 
+        setSuccessMessage("Store updated successfully!");
+        setMapOpen(false);
       } else {
         console.error("Error updating store:", response.statusText);
       }
     } catch (error) {
       console.error("Error updating store:", error);
     }
+  };
+
+  // Handle closing the map popup and updating location
+  const handleMapDoneClick = () => {
+    setMapOpen(false); // Close the map
   };
 
   return (
@@ -175,7 +181,7 @@ const CreateStorePage = () => {
         )}
       </div>
 
-      <button onClick={handleDoneClick} className="done-button-main">
+      <button onClick={handleFormSubmit} className="done-button-main">
         Done
       </button>
 
@@ -196,7 +202,7 @@ const CreateStorePage = () => {
               setPosition={setPosition}
             />
           </MapContainer>
-          <button onClick={handleDoneClick} className="done-button">
+          <button onClick={handleMapDoneClick} className="done-button">
             Done
           </button>
         </div>

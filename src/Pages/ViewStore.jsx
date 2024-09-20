@@ -5,9 +5,12 @@ import "../styles/ViewStore.css";
 const ViewStore = () => {
   const [products, setProducts] = useState([]);
   const [storeImage, setStoreImage] = useState("");
+  const [storeName, setStoreName] = useState(""); // Add state for store name
+  const [storeDescription, setStoreDescription] = useState(""); // Add state for store description
   const [storeId, setStoreId] = useState(null);
 
   useEffect(() => {
+    document.title = "View Store";
     const fetchProducts = async () => {
       try {
         const token = sessionStorage.getItem("jwtToken");
@@ -32,6 +35,10 @@ const ViewStore = () => {
             const storeImageUrl = `${baseUrl}${storeData.pictureUrl}`;
             console.log("Store Image URL:", storeImageUrl);
             setStoreImage(storeImageUrl);
+
+            // Set store name and description
+            setStoreName(storeData.name);
+            setStoreDescription(storeData.description);
           } else {
             console.error("Failed to fetch store data");
           }
@@ -47,13 +54,13 @@ const ViewStore = () => {
           );
           if (productsResponse.ok) {
             const data = await productsResponse.json();
-            console.log("Products Response Data:", data); 
+            console.log("Products Response Data:", data);
 
             const updatedProducts = data.map((product) => {
-              console.log("Product Data:", product); 
+              console.log("Product Data:", product);
               const productImageUrl = product.imageUrl
                 ? `${baseUrl}${product.imageUrl}`
-                : ""; 
+                : "";
               console.log("Product Image URL:", productImageUrl);
               return {
                 ...product,
@@ -77,13 +84,20 @@ const ViewStore = () => {
 
   return (
     <div className="view-store-container">
-      <div className="store-image-container">
-        {storeImage ? (
-          <img src={storeImage} alt="Store" className="store-image" />
-        ) : (
-          <p>No store image available</p>
-        )}
+      <div className="store-info-container">
+        <div className="store-image-container">
+          {storeImage ? (
+            <img src={storeImage} alt="Store" className="store-image" />
+          ) : (
+            <p>No store image available</p>
+          )}
+        </div>
+        <div className="store-details">
+          <h1 className="store-name">{storeName}</h1>
+          <p className="store-description">{storeDescription}</p>
+        </div>
       </div>
+
       <h2 className="products-heading">Products</h2>
       <div className="products-container">
         {products.length > 0 ? (

@@ -21,9 +21,13 @@ const NavBar = () => {
         {/* Navigation Links */}
         <ul className={`navbar-menu ${menuOpen ? "active" : ""}`}>
           <li className="navbar-item">
-            <Link to="/" className="navbar-link">
-              <img src="assets/white-logo.png" alt="Logo" className="logo-image" />{" "}
-              {/* Replace with your logo path */}
+            <Link className="navbar-link">
+              <img
+                src="assets/white-logo.png"
+                alt="Logo"
+                className="logo-image"
+              />{" "}
+             
             </Link>
           </li>
           <li className="navbar-item">

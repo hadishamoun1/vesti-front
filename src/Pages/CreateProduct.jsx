@@ -3,6 +3,7 @@ import "../styles/CreateProduct.css";
 import { jwtDecode } from "jwt-decode";
 
 const CreateProductPage = () => {
+  document.title = "Create Product";
   const [image, setImage] = useState(null);
   const [productName, setProductName] = useState("");
   const [productDescription, setProductDescription] = useState("");

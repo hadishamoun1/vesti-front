@@ -30,6 +30,7 @@ const DiscountsPage = () => {
   };
 
   useEffect(() => {
+    document.title = "Discounts";
     const storeIdFromToken = getStoreIdFromToken();
     setStoreId(storeIdFromToken);
 
