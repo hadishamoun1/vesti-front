@@ -1,0 +1,142 @@
+/* Navbar container */
+.navbar {
+  background-color: #167ce2;
+  padding: 10px 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 60px;
+  position: relative;
+  z-index: 1000;
+}
+
+/* Navbar content container */
+.navbar-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  position: relative;
+}
+
+/* Navigation menu styles */
+.navbar-menu {
+  list-style: none;
+  display: flex;
+  gap: 50px;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+/* Menu item styles */
+.navbar-item {
+  margin: 0;
+  position: relative; /* Required for dropdown positioning */
+}
+
+/* Link styles */
+.navbar-link {
+  color: #f8f9fa;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+/* Dropdown arrow styles */
+.dropdown-arrow {
+  margin-left: 8px;
+  font-size: 14px;
+}
+
+/* Link hover effect */
+.navbar-link:hover {
+  color: #ffd700;
+  text-decoration: underline;
+}
+
+/* Logo styles */
+.navbar-logo .logo-image {
+  height: 45px;
+  margin-bottom: 5px;
+}
+
+.logo-image {
+  margin-top: 5px;
+}
+
+/* Dropdown menu styles */
+.dropdown-toggle {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  top: 100%; /* Position directly below the parent */
+  left: 0;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  width: 120px;
+  font-weight: 400;
+}
+
+.dropdown-menu.show {
+  display: block;
+}
+
+.dropdown-item {
+  display: block;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: #000;
+}
+
+.dropdown-item:hover {
+  background-color: #f1f1f1;
+}
+
+/* Hamburger menu styles */
+.navbar-hamburger {
+  display: none;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+}
+
+/* Hamburger icon styles */
+.hamburger-icon {
+  font-size: 24px;
+  color: #f8f9fa;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  /* Hide the menu by default on small screens */
+  .navbar-menu {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    background-color: #167ce2;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    padding: 10px 0;
+    align-items: center;
+  }
+
+  .navbar-menu.active {
+    display: flex;
+  }
+
+  .navbar-hamburger {
+    display: block;
+  }
+}

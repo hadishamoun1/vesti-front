@@ -1,0 +1,54 @@
+.admin-panel {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.admin-title {
+  font-size: 2em;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 auto;
+}
+
+.user-table th,
+.user-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.user-table th {
+  background-color: #1c89f7;
+  color: #ffffff;
+}
+
+.user-table tr:hover {
+  background-color: #f1f1f1;
+}
+.delete-button {
+  background-color: #ff4d4f;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  background-color: #ff7875;
+}
+
+.user-table th,
+.user-table td {
+  padding: 10px;
+}
+
+.admin-panel {
+  margin: 20px;
+}
