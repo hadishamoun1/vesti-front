@@ -12,7 +12,6 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { jwtDecode } from "jwt-decode";
 
-// Define a custom icon for the marker
 const redPinIcon = new L.Icon({
   iconUrl:
     "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
@@ -29,7 +28,7 @@ const LocationMarker = ({ setLocation, position, setPosition }) => {
     click(event) {
       const { lat, lng } = event.latlng;
       setPosition([lat, lng]);
-      setLocation({ lat, lng }); // Update location state when marker is placed
+      setLocation({ lat, lng }); 
     },
   });
 
@@ -76,7 +75,7 @@ const CreateStorePage = () => {
     formData.append("description", storeDescription);
     const locationGeoJSON = {
       type: "Point",
-      coordinates: [location.lng, location.lat], // Order is [longitude, latitude]
+      coordinates: [location.lng, location.lat], 
     };
     formData.append("location", JSON.stringify(locationGeoJSON));
     if (image) {
@@ -109,9 +108,8 @@ const CreateStorePage = () => {
     }
   };
 
-  // Handle closing the map popup and updating location
   const handleMapDoneClick = () => {
-    setMapOpen(false); // Close the map
+    setMapOpen(false); 
   };
 
   return (

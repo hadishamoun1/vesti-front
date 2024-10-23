@@ -13,8 +13,8 @@ const DiscountsPage = () => {
   const [discountHistory, setDiscountHistory] = useState([]);
   const [storeId, setStoreId] = useState(null);
   const [productCache, setProductCache] = useState({});
-  const [productsLoaded, setProductsLoaded] = useState(false); // New state to track products loading
-  const apiUrl = "http://localhost:3000"; // Base URL for your API
+  const [productsLoaded, setProductsLoaded] = useState(false); 
+  const apiUrl = "http://localhost:3000"; 
 
   const getStoreIdFromToken = () => {
     const token = sessionStorage.getItem("jwtToken");
@@ -88,7 +88,7 @@ const DiscountsPage = () => {
   };
 
   const fetchDiscountHistory = async () => {
-    if (!storeId || !productsLoaded) return; // Ensure products are loaded
+    if (!storeId || !productsLoaded) return; 
     try {
       const response = await fetch(
         `${apiUrl}/discounts/history?storeId=${storeId}`
@@ -263,7 +263,7 @@ const DiscountsPage = () => {
           >
             <option value="">Select a category</option>
             <option value="hoodies">hoodies</option>
-            <option value="shirt">shirt</option>
+            <option value="shirts">shirts</option>
             <option value="t-shirts">t-shirts</option>
             <option value="long shirts">long shirts</option>
           </select>
